@@ -6,7 +6,7 @@
   <link href="http://harry95.top/atom.xml" rel="self"/>
   
   <link href="http://harry95.top/"/>
-  <updated>2022-02-27T10:30:39.124Z</updated>
+  <updated>2022-03-02T03:39:17.334Z</updated>
   <id>http://harry95.top/</id>
   
   <author>
@@ -17,20 +17,37 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>SpringBoot整合Shiro和Jwt</title>
+    <link href="http://harry95.top/2022/02/27/SpringBoot%E6%95%B4%E5%90%88Shiro%E5%92%8CJwt/"/>
+    <id>http://harry95.top/2022/02/27/SpringBoot%E6%95%B4%E5%90%88Shiro%E5%92%8CJwt/</id>
+    <published>2022-02-27T10:17:10.000Z</published>
+    <updated>2022-03-02T03:39:17.334Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;SpingBoot整合Shiro和JWT&quot;&gt;&lt;a href=&quot;#SpingBoot整合Shiro和JWT&quot; class=&quot;headerlink&quot; title=&quot;SpingBoot整合Shiro和JWT&quot;&gt;&lt;/a&gt;SpingBoot整合Shiro和JWT&lt;/h2&gt;&lt;p&gt;项目地址：&lt;a href=&quot;https://github.com/seam95/SpringBoot-Shiro-Jwt.git&quot;&gt;https://github.com/seam95/SpringBoot-Shiro-Jwt.git&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;Shiro学习知识点&quot;&gt;&lt;a href=&quot;#Shiro学习知识点&quot; class=&quot;headerlink&quot; title=&quot;Shiro学习知识点&quot;&gt;&lt;/a&gt;Shiro学习知识点&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;https://gitee.com/wangseam/picgoimage/raw/master/img/shiro1.png&quot; alt=&quot;shiro1&quot;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Authentication&lt;/strong&gt;：身份认证 / 登录，验证用户是不是拥有相应的身份；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Authorization&lt;/strong&gt;：授权，即权限验证，验证某个已认证的用户是否拥有某个权限；即判断用户是否能做事情，常见的如：验证某个用户是否拥有某个角色。或者细粒度的验证某个用户对某个资源是否具有某个权限；</summary>
+    
+    
+    
+    
+    <category term="SpringBoot Shiro Jwt MybatisPlus" scheme="http://harry95.top/tags/SpringBoot-Shiro-Jwt-MybatisPlus/"/>
+    
+  </entry>
+  
+  <entry>
     <title>SSM框架的相关配置文件</title>
     <link href="http://harry95.top/2021/11/21/SSM%E6%A1%86%E6%9E%B6%E7%9A%84%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/"/>
     <id>http://harry95.top/2021/11/21/SSM%E6%A1%86%E6%9E%B6%E7%9A%84%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/</id>
     <published>2021-11-20T16:00:00.000Z</published>
-    <updated>2022-02-27T10:30:39.124Z</updated>
+    <updated>2022-03-02T03:40:25.401Z</updated>
     
     
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;SSM框架的配置文件&quot;&gt;&lt;a href=&quot;#SSM框架的配置文件&quot; class=&quot;headerlink&quot;</summary>
-        
-      
+    <summary type="html">&lt;h1 id=&quot;SSM框架的配置文件&quot;&gt;&lt;a href=&quot;#SSM框架的配置文件&quot; class=&quot;headerlink&quot; title=&quot;SSM框架的配置文件&quot;&gt;&lt;/a&gt;SSM框架的配置文件&lt;/h1&gt;&lt;p&gt;SSM框架的基本配置文件有spring的配置文件&lt;strong&gt;applicationContext.xml&lt;/strong&gt;，springMVC的配置文件&lt;strong&gt;springMVC.xml&lt;/strong&gt;以及mybatis的全局配置文件&lt;strong&gt;mybatis-config.xm&lt;/strong&gt;l和mybatis的映射文件&lt;strong&gt;XXXMapper.xml&lt;/strong&gt;，此外，通常还有数据库配置文件&lt;strong&gt;db.properties&lt;/strong&gt;。通常还有&lt;strong&gt;web.xml&lt;/strong&gt;以及日记&lt;strong&gt;log4j&lt;/strong&gt;的配置文件。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://gitee.com/wangseam/picgoimage/raw/master/img/bug2.jpeg&quot; alt=&quot;bug2&quot;&gt;&lt;/p&gt;</summary>
     
     
     
