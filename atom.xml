@@ -6,7 +6,7 @@
   <link href="http://harry95.top/atom.xml" rel="self"/>
   
   <link href="http://harry95.top/"/>
-  <updated>2022-03-02T03:39:17.334Z</updated>
+  <updated>2022-03-21T09:21:27.257Z</updated>
   <id>http://harry95.top/</id>
   
   <author>
@@ -15,6 +15,25 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Java的集合框架</title>
+    <link href="http://harry95.top/2022/03/21/Java%E7%9A%84%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/"/>
+    <id>http://harry95.top/2022/03/21/Java%E7%9A%84%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/</id>
+    <published>2022-03-21T09:17:29.000Z</published>
+    <updated>2022-03-21T09:21:27.257Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;Java的集合框架&quot;&gt;&lt;a href=&quot;#Java的集合框架&quot; class=&quot;headerlink&quot; title=&quot;Java的集合框架&quot;&gt;&lt;/a&gt;Java的集合框架&lt;/h1&gt;&lt;p&gt;Java的集合框架位于java.util包中，但支持多线程的集合类位于java.util.concurrent包下。存放在集合中的元素，称为元素。Java集合框架概述如下图所示：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://gitee.com/wangseam/picgoimage/raw/master/img/%E9%9B%86%E5%90%882.gif&quot; alt=&quot;集合2&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Java的集合框架主要由两个根接口Collection和Map派生而来，而Conllection又派生出三个子接口List，Set，Queue。因此，集合大概有四大接口体系List，Set，Queue，Map。</summary>
+    
+    
+    
+    
+    <category term="Java 集合框架" scheme="http://harry95.top/tags/Java-%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/"/>
+    
+  </entry>
   
   <entry>
     <title>SpringBoot整合Shiro和Jwt</title>

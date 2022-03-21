@@ -95,4 +95,175 @@
         <tag>SpingMVC Spring Mybatis</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Java的集合框架</title>
+    <url>/2022/03/21/Java%E7%9A%84%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/</url>
+    <content><![CDATA[<h1 id="Java的集合框架"><a href="#Java的集合框架" class="headerlink" title="Java的集合框架"></a>Java的集合框架</h1><p>Java的集合框架位于java.util包中，但支持多线程的集合类位于java.util.concurrent包下。存放在集合中的元素，称为元素。Java集合框架概述如下图所示：</p>
+<p><img src="https://gitee.com/wangseam/picgoimage/raw/master/img/%E9%9B%86%E5%90%882.gif" alt="集合2"></p>
+<p>Java的集合框架主要由两个根接口Collection和Map派生而来，而Conllection又派生出三个子接口List，Set，Queue。因此，集合大概有四大接口体系List，Set，Queue，Map。<span id="more"></span></p>
+<p><strong>集合框架：</strong></p>
+<p>Conllection：接口储存一组不唯一，无序 的对象。</p>
+<p>List：接口储存一组不唯一，有序（索引顺序）的对象。</p>
+<p>Set：接口储存一组唯一，无序的对象。</p>
+<p>Map：接口存储一组键值对对象，提供key到value的映射。其中，key唯一无序，而value不唯一无序。</p>
+<p>List接口实现类：ArrayList，LinkedList，分别是数据结构中的链表和顺序表的实现。</p>
+<h2 id="ArrayList实现类"><a href="#ArrayList实现类" class="headerlink" title="ArrayList实现类"></a>ArrayList实现类</h2><p>ArrayList的底层是一个长度可以动态增长的Object数组</p>
+<p><img src="https://gitee.com/wangseam/picgoimage/raw/master/img/image-20220321135439457.png" alt="image-20220321135439457"></p>
+<p><img src="https://gitee.com/wangseam/picgoimage/raw/master/img/image-20220321135453497.png" alt="image-20220321135453497"></p>
+<p>在JDK1.7中，使用无参构造方法创建ArrayList对象时，默认的底层数组长度是10，JDK1.8中，使用无参数构造方法创建ArrayList对象时，默认底层数组长度是0，第一次添加元素时，容量不足时进行扩容。</p>
+<p><img src="https://gitee.com/wangseam/picgoimage/raw/master/img/image-20220321140529154.png" alt="image-20220321140529154"></p>
+<p>进入源码分析，我们看到，第一次添加元素时，会调用ensureCapacityInternal()方法并向其中传入size+1，此时由于是空数组，size为0，我们继续进入这个ensureCapacityInternal（）方法。</p>
+<p><img src="https://gitee.com/wangseam/picgoimage/raw/master/img/image-20220321140806228.png" alt="image-20220321140806228"></p>
+<p>然后直接进入calculateCapacity（）方法，此时传入的参数为elementData空数组和1，</p>
+<p><img src="https://gitee.com/wangseam/picgoimage/raw/master/img/image-20220321141045253.png" alt="image-20220321141045253"></p>
+<p>这里有一个if判断，由于DEFAULTCAPACITY_EMPTY_ELEMENTDATA是一个空数组，因此判断生效。返回<code>Math.max(DEFAULT_CAPACITY, minCapacity);</code>即其中最大值为DEFAULT_CAPACITY= 10。</p>
+<p><img src="https://gitee.com/wangseam/picgoimage/raw/master/img/image-20220321141142273.png" alt="image-20220321141142273"></p>
+<p><img src="https://gitee.com/wangseam/picgoimage/raw/master/img/image-20220321141251958.png" alt="image-20220321141251958"></p>
+<p>此时返回一个int值为10到ensureCapacityInternal方法</p>
+<p><img src="https://gitee.com/wangseam/picgoimage/raw/master/img/image-20220321141623566.png" alt="image-20220321141623566"></p>
+<p>然后进入到ensureExplicitCapacity方法，显而易见，我们直接进入grow方法，此时的minCapacity为10，</p>
+<p><img src="https://gitee.com/wangseam/picgoimage/raw/master/img/image-20220321141714594.png" alt="image-20220321141714594"></p>
+<p><img src="https://gitee.com/wangseam/picgoimage/raw/master/img/image-20220321142305115.png" alt="image-20220321142305115"></p>
+<p>oldCapacity &gt;&gt; 1是移位操作，可以简单的将其看成是乘以2分之一,因此新容量newCapacity 是当前容量的1.5倍，然后进行if判断，如果新容量newCapacity 减去传入的minCapacity 最小需要容量小于0，那么扩容便直接扩到最小所需容量即可。而此处的<code>private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;</code></p>
+<p>可以看出MAX_ARRAY_SIZE是int类型中最大的数，一般用不到，接着走最后一步，此处条用copyOf方法，此方法直接将原数组elementData复制到一个新的给定长度的数组中，并返回此新数组对象。将数组扩容。然后将元素赋值给数组的下标，返回True。</p>
+<p>ArrayList数组的扩容机制为：当初始化一个带有当前容量大小的数组时，初始化带参构造方法创建参数大小的Object对象数组，其后容量不足时再按照1.5进行扩容，而创建对象时没有传参时，会默认创建一个空数组，当添加第一个元素时，才会扩容为默认数值10，然后当时容量不足时在按照1.5倍进行扩容。</p>
+<p><img src="https://gitee.com/wangseam/picgoimage/raw/master/img/image-20220321143312481.png" alt="image-20220321143312481"></p>
+<h2 id="LinkedList实现类"><a href="#LinkedList实现类" class="headerlink" title="LinkedList实现类"></a>LinkedList实现类</h2><p><img src="https://gitee.com/wangseam/picgoimage/raw/master/img/image-20220321143848577.png" alt="image-20220321143848577"></p>
+<p>LinkedList 继承了 AbstractSequentialList 类。</p>
+<p>LinkedList 实现了 Queue 接口，可作为队列使用。</p>
+<p>LinkedList 实现了 List 接口，可进行列表的相关操作。</p>
+<p>LinkedList 实现了 Deque 接口，可作为队列使用。（Deque是双端队列，继承了Queue，可以在首尾插入删除元素，）</p>
+<p>LinkedList 实现了 Cloneable 接口，可实现克隆。</p>
+<p>LinkedList 实现了 java.io.Serializable 接口，即可支持序列化，能通过序列化去传输。</p>
+<p>查看源码，我们可以看出LinkedList是通过双向链表实现的，此外，还定义了first和last分别指向第一个和最后一个节点。（transient关键字是指在序列化时所修饰的对象不被序列化）</p>
+<p><img src="https://gitee.com/wangseam/picgoimage/raw/master/img/image-20220321153559292.png" alt="image-20220321153559292"></p>
+<p><img src="https://gitee.com/wangseam/picgoimage/raw/master/img/image-20220321145241785.png" alt="image-20220321145241785"></p>
+<p><strong>以下情况使用 ArrayList :</strong></p>
+<ul>
+<li>频繁访问列表中的某一个元素。</li>
+<li>只需要在列表末尾进行添加和删除元素操作。</li>
+</ul>
+<p><strong>以下情况使用 LinkedList :</strong></p>
+<ul>
+<li>你需要通过循环迭代来访问列表中的某些元素。</li>
+<li>需要频繁的在列表开头、中间、末尾等位置进行添加和删除元素操作。</li>
+</ul>
+<h2 id="HashSet实现类"><a href="#HashSet实现类" class="headerlink" title="HashSet实现类"></a>HashSet实现类</h2><p>HashSet采用的是HashMap来实现的，添加操作时，只将值put到key中，而value则是一个空的object对象。</p>
+<p><img src="https://gitee.com/wangseam/picgoimage/raw/master/img/image-20220321155703522.png" alt="image-20220321155703522"></p>
+<p>优点有添加速度快，查询速度快和删除速度快，缺点为无序。</p>
+<h2 id="LinkedHashSet实现类"><a href="#LinkedHashSet实现类" class="headerlink" title="LinkedHashSet实现类"></a>LinkedHashSet实现类</h2><p>•  LinkedHashSet</p>
+<p>•    采用哈希表存储结构，同时使用链表维护次序</p>
+<p>•    有序（添加顺序）</p>
+<h2 id="TreeSet实现类"><a href="#TreeSet实现类" class="headerlink" title="TreeSet实现类"></a>TreeSet实现类</h2><p>采用二叉树（红黑树）的存储结构，有序，查询速度比List快（按照内容查询），但是没有HashSet快。</p>
+<ul>
+<li>基于排序顺序实现不重复。</li>
+<li>实现了SortedSet接口，对集合元素自动排序。</li>
+<li>元素对象的类型必须实现Comparable接口，指定排序规则。除了实现Comparable接口里的比较方法，TreeSet也提供了一个带比较器Comparator的构造方法，使用匿名内部类来实现它：</li>
+<li>通过CompareTo方法确定是否为重复元素。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 要求：使用TreeSet集合实现字符串按照长度进行排序</span></span><br><span class="line"><span class="comment"> * Comparator接口实现定制比较</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">demo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        TreeSet&lt;String&gt; treeSet=<span class="keyword">new</span> TreeSet&lt;String&gt;(<span class="keyword">new</span> Comparator&lt;String&gt;() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="comment">//先比较字符串长度</span></span><br><span class="line">            <span class="comment">//再比较字符串</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(String o1, String o2)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">int</span> n1=o1.length()-o2.length();</span><br><span class="line">                <span class="keyword">int</span> n2=o1.compareTo(o2);</span><br><span class="line">                <span class="keyword">return</span> n1==<span class="number">0</span>?n2:n1;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        treeSet.add(<span class="string">&quot;helloworld&quot;</span>);</span><br><span class="line">        treeSet.add(<span class="string">&quot;dfghjkl&quot;</span>);</span><br><span class="line">        treeSet.add(<span class="string">&quot;asdfhgjkjhg&quot;</span>);</span><br><span class="line">        treeSet.add(<span class="string">&quot;AFSGDHJHGFDA&quot;</span>);</span><br><span class="line">        treeSet.add(<span class="string">&quot;asgdhfjhgdfsd&quot;</span>);</span><br><span class="line">        System.out.println(treeSet.toString());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    </p>
+<h2 id="Map集合"><a href="#Map集合" class="headerlink" title="Map集合"></a>Map集合</h2><p>•  Map</p>
+<p>•    特点：存储的键值对映射关系，根据key可以找到value</p>
+<p>•  HashMap</p>
+<p>•    采用Hashtable哈希表存储结构（神奇的结构）</p>
+<p>•    优点：添加速度快 查询速度快 删除速度快</p>
+<p>•    缺点：key无序</p>
+<p>•  LinkedHashMap</p>
+<p>•    采用哈希表存储结构，同时使用链表维护次序</p>
+<p>•    key有序（添加顺序）</p>
+<p>•  TreeMap </p>
+<p>•    采用二叉树（红黑树）的存储结构</p>
+<p>•    优点：key有序 查询速度比List快（按照内容查询）</p>
+<p>•    缺点：查询速度没有HashMap快</p>
+<h3 id="HashMap的原理"><a href="#HashMap的原理" class="headerlink" title="HashMap的原理"></a>HashMap的原理</h3><p>hashmap也叫散列表，特点是很快，特别快。</p>
+<p>最容易理解的结构：数组+链表+红黑树（链表超过8则转为红黑树，小于6则变会链表）&gt;&gt;加快查询</p>
+<p><img src="https://gitee.com/wangseam/picgoimage/raw/master/img/image-20220321160809177.png" alt="image-20220321160809177"></p>
+<ul>
+<li><p>默认初始化容量：<code>static final int DEFAULT_INITIAL_CAPACITY = 1 &lt;&lt; 4; // aka 16</code></p>
+<ul>
+<li>数组最大容量：<code>static final int MAXIMUM_CAPACITY = 1 &lt;&lt; 30;</code></li>
+</ul>
+</li>
+<li><p>默认加载因子：<code>static final float DEFAULT_LOAD_FACTOR = 0.75f;</code></p>
+</li>
+<li><p>链表调整为红黑树的链表长度阈值（JDK1.8）：<code>static final int TREEIFY_THRESHOLD = 8;</code></p>
+</li>
+<li><p>红黑树调整为链表的链表长度阈值（JDK1.8）：<code>static final int UNTREEIFY_THRESHOLD = 6;</code></p>
+</li>
+<li><p>链表调整为红黑树的数组最小阈值（JDK1.8）：<code>static final int MIN_TREEIFY_CAPACITY = 64;</code></p>
+</li>
+<li><p>HashMap存储的数组：<code>transient Node&lt;K,V&gt;[] table;</code></p>
+</li>
+<li><p>HashMap存储的元素个数：<code>transient int size;</code></p>
+<blockquote>
+<ul>
+<li>默认加载因子是什么？<ul>
+<li>就是判断数组是否扩容的一个因子。假如数组容量为100，如果HashMap的存储元素个数超过了100*0.75=75，那么就会进行扩容。</li>
+</ul>
+</li>
+<li>链表调整为红黑树的链表长度阈值是什么？<ul>
+<li>假设在数组中下标为3的位置已经存储了数据，当新增数据时通过哈希码得到的存储位置又是3，那么就会在该位置形成一个链表，当链表过长时就会转换成红黑树以提高执行效率，这个阈值就是链表转换成红黑树的最短链表长度；</li>
+</ul>
+</li>
+<li>红黑树调整为链表的链表长度阈值是什么？<ul>
+<li>当红黑树的元素个数小于该阈值时就会转换成链表。</li>
+</ul>
+</li>
+<li>链表调整为红黑树的数组最小阈值是什么？<ul>
+<li>并不是只要链表长度大于8就可以转换成红黑树，在前者条件成立的情况下，数组的容量必须大于等于64才会进行转换。</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<p>HashMap的数组table存储的就是一个个的Node&lt;K,V&gt;类型，很清晰地看到有一对键值，还有一个指向next的指针（以下只截取了部分源码）：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">COPYstatic class Node&lt;K,V&gt; implements Map.Entry&lt;K,V&gt; &#123;</span><br><span class="line">      final K key;</span><br><span class="line">      V value;</span><br><span class="line">      Node&lt;K,V&gt; next;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>之前的代码中在new对象时调用的是HashMap的无参构造方法，进入到该构造方法的源码查看一下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">COPYpublic HashMap() &#123;</span><br><span class="line">      this.loadFactor = DEFAULT_LOAD_FACTOR; // all other fields defaulted</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>发现没什么内容，只是赋值了一个默认加载因子；而在上文我们观察到源码中table和size都没有赋予初始值，说明刚创建的HashMap对象没有分配容量，并不拥有默认的16个空间大小，这样做的目的是为了节约空间，此时table为null，size为0。</p>
+<p>当我们往对象里添加元素时调用put方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">COPYpublic V put(K key, V value) &#123;</span><br><span class="line">      return putVal(hash(key), key, value, false, true);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>put方法把key和value传给了putVal，同时还传入了一个hash(Key)所返回的值，这是一个产生哈希值的方法，再进入到putVal方法（部分源码）：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">COPYfinal V putVal(int hash, K key, V value, boolean onlyIfAbsent,</span><br><span class="line">                    boolean evict) &#123;</span><br><span class="line">      Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; p; int n, i;</span><br><span class="line">      if ((tab = table) == null || (n = tab.length) == 0)</span><br><span class="line">          n = (tab = resize()).length;</span><br><span class="line">      if ((p = tab[i = (n - 1) &amp; hash]) == null)</span><br><span class="line">          tab[i] = newNode(hash, key, value, null);</span><br><span class="line">      else&#123;</span><br><span class="line">          //略</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里面创建了一个tab数组和一个Node变量p，第一个if实际是判断table是否为空，而我们现在只关注刚创建HashMap对象时的状态，此时tab和table都为空，满足条件，执行内部代码，这条代码其实就是把resize()所返回的结果赋给tab，n就是tab的长度，resize顾名思义就是重新调整大小。查看resize()源码（部分）：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">COPYfinal Node&lt;K,V&gt;[] resize() &#123;</span><br><span class="line">      Node&lt;K,V&gt;[] oldTab = table;</span><br><span class="line">      int oldCap = (oldTab == null) ? 0 : oldTab.length;</span><br><span class="line">      int oldThr = threshold;</span><br><span class="line">      if (oldCap &gt; 0);</span><br><span class="line">      else if (oldThr &gt; 0);</span><br><span class="line">      else &#123;               // zero initial threshold signifies using defaults</span><br><span class="line">          newCap = DEFAULT_INITIAL_CAPACITY;</span><br><span class="line">          newThr = (int)(DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY);</span><br><span class="line">      &#125; </span><br><span class="line">      @SuppressWarnings(&#123;&quot;rawtypes&quot;,&quot;unchecked&quot;&#125;)</span><br><span class="line">      Node&lt;K,V&gt;[] newTab = (Node&lt;K,V&gt;[])new Node[newCap];</span><br><span class="line">      table = newTab;</span><br><span class="line">      return newTab;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>该方法首先把table及其长度赋值给oldTab和oldCap；threshold是阈值的意思，此时为0，所以前两个if先不管，最后else里newCap的值为默认初始化容量16；往下创建了一个newCap大小的数组并将其赋给了table，刚创建的HashMap对象就在这里获得了初始容量。然后我们再回到putVal方法，第二个if就是根据哈希码得到的tab中的一个位置是否为空，为空便直接添加元素，此时数组中无元素所以直接添加。至此HashMap对象就完成了第一个元素的添加。当添加的元素超过16*0.75=12时，就会进行扩容：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">COPYfinal V putVal(int hash, K key, V value, boolean onlyIfAbsent,boolean evict)&#123;</span><br><span class="line">      if (++size &gt; threshold)</span><br><span class="line">          resize();</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>扩容的代码如下（部分）：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">COPYfinal Node&lt;K,V&gt;[] resize() &#123;</span><br><span class="line">      int oldCap = (oldTab == null) ? 0 : oldTab.length;</span><br><span class="line">      int newCap;</span><br><span class="line">      if (oldCap &gt; 0) &#123;</span><br><span class="line">          if (oldCap &gt;= MAXIMUM_CAPACITY) &#123;//略&#125;</span><br><span class="line">          else if ((newCap = oldCap &lt;&lt; 1) &lt; MAXIMUM_CAPACITY &amp;&amp;</span><br><span class="line">                   oldCap &gt;= DEFAULT_INITIAL_CAPACITY)</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>核心部分是else if里的移位操作，<strong>也就是说每次扩容都是原来大小的两倍</strong>。</p>
+</li>
+<li><p>*注**：额外说明的一点是在JDK1.8以前链表是头插入，JDK1.8以后链表是尾插入。</p>
+</li>
+</ul>
+<h3 id="哈希冲突的解决"><a href="#哈希冲突的解决" class="headerlink" title="哈希冲突的解决"></a>哈希冲突的解决</h3><p>HashMap基于hashing原理，我们通过put()和get()方法储存和获取对象。当我们将键值对传递给put()方法时，它调用键对象的hashCode()方法来计算hashcode，然后找到bucket位置来储存值对象。当获取对象时，通过键对象的equals()方法找到正确的键值对，然后返回值对象。HashMap使用<strong>链表</strong>来解决碰撞问题，当发生碰撞了，对象将会储存在链表的下一个节点中。 HashMap在每个链表节点中储存键值对对象。</p>
+<p>当两个不同的输入值，根据同一散列函数计算出相同的散列值的现象，我们就把它叫做碰撞（<strong>哈希碰撞</strong>、<strong>哈希冲突</strong>）</p>
+<p><strong>为什么1.8中引入红黑树？</strong></p>
+<p>当我们的HashMap中存在大量数据时，加入我们某个bucket下对应的链表有n个元素，那么遍历时间复杂度就为<code>O(n)</code>，为了针对这个问题，JDK1.8在HashMap中新增了红黑树的数据结构，进一步使得遍历复杂度降低至<code>O(logn)</code>； </p>
+<p>简单总结一下HashMap是使用了哪些方法来有效解决哈希冲突的：</p>
+<ol>
+<li>使用链地址法（使用散列表）来链接拥有相同hash值的数据；</li>
+<li>使用2次扰动函数（hash函数）来降低哈希冲突的概率，使得数据分布更平均；</li>
+<li>引入红黑树进一步降低遍历的时间复杂度，使得遍历更快；</li>
+</ol>
+<p><strong>HashMap什么时候进行扩容？</strong></p>
+<p>当hashmap中的元素个数超过<code>数组大小 * loadFactor</code> 时，就会进行数组扩容，loadFactor的默认值为0.75，也就是说，默认情况下，数组大小为16，那么当hashmap中元素个数超过<code>16 * 0.75=12</code>的时候，就把数组的大小扩展为2 * 16=32，即扩大一倍，然后重新计算每个元素在数组中的位置，而这是一个非常消耗性能的操作，所以如果我们已经预知hashmap中元素的个数，那么预设数组的大小能够有效的提高hashmap的性能。</p>
+<p>比如说，我们有1000个元素<code>new HashMap(1000)</code>， 但是理论上来讲<code>new HashMap(1024)</code>更合适，不过上面已经说过，即使是1000，hashmap也自动会将其设置为1024。 但是<code>new HashMap(1024)</code>还不是更合适的，因为<code>0.75*1024 &lt; 1000</code>, 也就是说为了让<code>0.75 * size &gt; 1000</code>， 我们必须这样<code>new HashMap(2048)</code>才最合适，避免了resize的问题。</p>
+<p>可以这样说：</p>
+<p>1.添加元素的时候会检查容器当前元素个数。当HashMap的容量值超过了临界值(默认16 * 0.75=12)时扩容。</p>
+<p>2.HashMap将会重新扩容到下一个2的指数幂（16-&gt;32-&gt;64）。</p>
+<p>3.调用resize方法，定义长度为新长度(32)的数组，然后对原数组数据进行再Hash。这个过程是一个性能损耗点。</p>
+]]></content>
+      <tags>
+        <tag>Java 集合框架</tag>
+      </tags>
+  </entry>
 </search>
